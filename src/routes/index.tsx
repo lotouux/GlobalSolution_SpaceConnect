@@ -91,17 +91,24 @@ function MeshPage() {
     stormActive, triggerStorm, disableNode, stats 
   } = useConstellationSimulator();
 
+  // Ajuste de tipo com 'as const' para corrigir o erro do TypeScript
+  const springConfig = { type: "spring" as const, stiffness: 200, damping: 30 };
+
   return (
-    <div className="relative h-[calc(100vh-4rem)] lg:h-screen overflow-hidden bg-background">
-      {/* Camada 3D do Globo */}
-      <div className="absolute inset-0">
+    <div className="relative h-screen w-full overflow-hidden bg-background">
+      {/* Camada 3D do Globo: Move-se para a direita quando selecionado */}
+      <motion.div 
+        animate={{ x: selected ? 210 : 0 }} 
+        transition={springConfig}
+        className="absolute inset-0 z-0 will-change-transform"
+      >
         <OrbitalGlobe
           nodes={nodes.map((n) => ({ ...n, failed: failedSet.has(n.id) }))}
           links={links}
           onSelectNode={setSelected}
           selectedId={selected?.id}
         />
-      </div>
+      </motion.div>
 
       {/* Overlay Superior: Título e HUD */}
       <div className="absolute top-0 inset-x-0 p-4 lg:p-8 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 pointer-events-none z-10">
@@ -123,10 +130,12 @@ function MeshPage() {
         </div>
       </div>
 
-      {/* Botões de Ação*/}
-      <div className={`absolute left-4 right-4 lg:left-8 lg:right-auto flex flex-col lg:flex-row gap-3 z-40 transition-all duration-500 ease-in-out ${
-          selected ? "bottom-[80vh] lg:bottom-8" : "bottom-20 lg:bottom-8"
-      }`}>
+      {/* Botões de Ação */}
+      <motion.div 
+        animate={{ x: selected ? 400 : 0 }}
+        transition={springConfig}
+        className="absolute bottom-8 left-4 lg:left-8 flex flex-col lg:flex-row gap-3 z-20 will-change-transform"
+      >
         <button
           onClick={triggerStorm}
           disabled={stormActive}
@@ -143,7 +152,7 @@ function MeshPage() {
           <Cpu className="h-4 w-4" />
           Derrubar Nó Selecionado
         </button>
-      </div>
+      </motion.div>
 
       {/* Alerta Global de Tempestade */}
       <AnimatePresence>
@@ -162,7 +171,7 @@ function MeshPage() {
       </AnimatePresence>
 
       {/* Painel Lateral do Satélite */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {selected && (
           <NodeDrawer
             node={{ ...selected, failed: failedSet.has(selected.id) }}
@@ -215,7 +224,6 @@ function LegendDot({ color, label }: { color: string; label: string }) {
 }
 
 function NodeDrawer({ node, onClose }: { node: SatNode; onClose: () => void }) {
-  // Simula pequenas flutuações na telemetria enquanto o painel está aberto
   const [liveWorkload, setLiveWorkload] = useState(node.workload);
   const [liveTemp, setLiveTemp] = useState(node.gpuTemp);
 
@@ -235,16 +243,12 @@ function NodeDrawer({ node, onClose }: { node: SatNode; onClose: () => void }) {
 
   return (
     <motion.aside
-      initial={{ y: "100%", opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: "100%", opacity: 0 }}
+      initial={{ x: "-100%", opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: "-100%", opacity: 0 }}
       transition={{ type: "spring", damping: 30, stiffness: 250 }}
-      className="absolute lg:top-0 lg:right-0 lg:h-full lg:w-[420px] lg:rounded-none
-        bottom-0 left-0 right-0 max-h-[75vh] lg:max-h-none rounded-t-3xl
-        bg-surface/95 backdrop-blur-2xl border-t lg:border-t-0 lg:border-l border-border p-6 lg:p-8 overflow-y-auto z-30 shadow-2xl"
+      className="absolute top-0 left-0 h-full w-[420px] rounded-none bg-surface/95 backdrop-blur-2xl border-r border-border p-8 overflow-y-auto z-30 shadow-2xl scrollbar-hide"
     >
-      <div className="lg:hidden h-1.5 w-12 rounded-full bg-border mx-auto mb-6" />
-
       <div className="flex items-start justify-between mb-8">
         <div>
           <div className="text-[10px] font-mono text-primary tracking-[0.3em] font-semibold mb-1">NÓ ORBITAL ATIVO</div>

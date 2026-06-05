@@ -111,7 +111,7 @@
 
 /* Ocultador de scrollbar responsivo */
 @utility scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
+  -ms-overflow-style: none;  /* IE e Edge */
   scrollbar-width: none;  /* Firefox */
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari e Opera */
