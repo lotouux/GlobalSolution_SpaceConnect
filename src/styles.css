@@ -1,0 +1,130 @@
+@import "tailwindcss";
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-laser: var(--laser);
+  --color-eclipse: var(--eclipse);
+  --color-solar: var(--solar);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  --radius: 0.75rem;
+  /* Deep space dark theme */
+  --background: oklch(0.18 0.04 255);
+  --foreground: oklch(0.97 0.01 250);
+  --surface: oklch(0.22 0.045 258);
+  --surface-elevated: oklch(0.26 0.05 260);
+  --card: oklch(0.22 0.045 258);
+  --card-foreground: oklch(0.97 0.01 250);
+  --popover: oklch(0.24 0.05 260);
+  --popover-foreground: oklch(0.97 0.01 250);
+  --primary: oklch(0.72 0.18 158); /* neon green #10B981 vibe */
+  --primary-foreground: oklch(0.15 0.04 255);
+  --secondary: oklch(0.32 0.06 260);
+  --secondary-foreground: oklch(0.97 0.01 250);
+  --muted: oklch(0.28 0.04 258);
+  --muted-foreground: oklch(0.68 0.03 255);
+  --accent: oklch(0.68 0.18 235); /* cyan blue */
+  --accent-foreground: oklch(0.15 0.04 255);
+  --destructive: oklch(0.66 0.22 25);
+  --destructive-foreground: oklch(0.98 0.01 250);
+  --success: oklch(0.72 0.18 158);
+  --warning: oklch(0.78 0.16 75);
+  --laser: oklch(0.78 0.22 155);
+  --eclipse: oklch(0.35 0.05 270);
+  --solar: oklch(0.82 0.17 80);
+  --border: oklch(0.32 0.05 258 / 60%);
+  --input: oklch(0.3 0.05 258);
+  --ring: oklch(0.72 0.18 158);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-display);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, oklch(0.32 0.1 235 / 0.25), transparent 60%),
+      radial-gradient(ellipse at 80% 90%, oklch(0.3 0.12 155 / 0.18), transparent 60%);
+    background-attachment: fixed;
+  }
+}
+
+@utility glow-primary {
+  box-shadow: 0 0 24px oklch(0.72 0.18 158 / 0.4), 0 0 1px oklch(0.72 0.18 158 / 0.8);
+}
+
+@utility glow-accent {
+  box-shadow: 0 0 24px oklch(0.68 0.18 235 / 0.4);
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(oklch(0.32 0.05 258 / 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.32 0.05 258 / 0.4) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+@utility text-glow {
+  text-shadow: 0 0 18px oklch(0.72 0.18 158 / 0.6);
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.animate-pulse-ring { animation: pulse-ring 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+.animate-scan { animation: scan 3s linear infinite; }
+.animate-blink { animation: blink 1.4s ease-in-out infinite; }
