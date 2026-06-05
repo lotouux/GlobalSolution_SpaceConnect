@@ -1,30 +1,26 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  Link,
-  createRootRouteWithContext,
-  useRouter,
-  HeadContent,
-  Scripts,
-} from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
+import { AppShell } from "../components/AppShell";
 
-import appCss from "../styles.css?url";
+// ============================================================================
+// COMPONENTES DE FEEDBACK VISUAL
+// ============================================================================
 
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+        <h1 className="text-7xl font-bold text-primary text-glow">404</h1>
+        <h2 className="mt-4 text-xl font-semibold text-foreground tracking-widest uppercase">Rota Inacessível</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          A órbita solicitada não existe ou o nó foi desativado.
         </p>
         <div className="mt-6">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex items-center justify-center rounded-md bg-primary/10 border border-primary/40 px-6 py-2.5 text-sm font-medium text-primary transition-all hover:bg-primary/20 glow-primary"
           >
-            Go home
+            Retornar ao Painel Principal
           </Link>
         </div>
       </div>
@@ -33,82 +29,52 @@ function NotFoundComponent() {
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  console.error(error);
+  console.error("Orion Error:", error);
   const router = useRouter();
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+      <div className="max-w-md text-center p-6 rounded-xl border border-destructive/30 bg-surface/50 backdrop-blur-md">
+        <h1 className="text-xl font-semibold tracking-tight text-destructive">
+          Falha Crítica de Telemetria
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+          Ocorreu um erro interno na interface. Nossos engenheiros foram notificados.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
           <button
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex items-center justify-center rounded-md bg-destructive/15 border border-destructive/40 px-4 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/25"
           >
-            Try again
+            Tentar Novamente
           </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-md border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-elevated"
           >
-            Go home
-          </a>
+            Voltar ao Início
+          </Link>
         </div>
       </div>
     </div>
   );
 }
 
+// ============================================================================
+// CONFIGURAÇÃO DO ROOT ROUTER
+// ============================================================================
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ORION · Space Connect" },
-      { name: "description", content: "Orbital mesh command dashboard for distributed AI inference." },
-      { name: "theme-color", content: "#0F172A" },
-      { property: "og:title", content: "ORION · Space Connect" },
-      { property: "og:description", content: "Orbital mesh command dashboard for distributed AI inference." },
-      { property: "og:type", content: "website" },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
-  }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
 
-function RootShell({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
-
-import { AppShell } from "../components/AppShell";
-
 function RootComponent() {
+  // Consome o QueryClient injetado via contexto no main.tsx
   const { queryClient } = Route.useRouteContext();
 
   return (
