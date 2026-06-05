@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @source "../src";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -108,6 +107,32 @@
 
 @utility text-glow {
   text-shadow: 0 0 18px oklch(0.72 0.18 158 / 0.6);
+}
+
+/* Ocultador de scrollbar responsivo */
+@utility scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari e Opera */
+  }
+}
+
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: oklch(0.32 0.05 258 / 80%);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.68 0.03 255 / 80%);
+  }
 }
 
 @keyframes pulse-ring {
