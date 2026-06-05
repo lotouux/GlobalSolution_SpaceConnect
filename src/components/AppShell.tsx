@@ -49,9 +49,7 @@ function MobileHeader() {
   return (
     <header className="lg:hidden sticky top-0 z-40 flex items-center justify-between px-4 h-14 border-b border-border bg-surface/80 backdrop-blur-xl transition-all">
       <div className="flex items-center gap-2.5">
-        <div className="relative h-8 w-8 rounded-lg bg-primary/15 flex items-center justify-center glow-primary">
-          <Satellite className="h-3.5 w-3.5 text-primary" />
-        </div>
+        <img src="/logo.png" alt="Orion Logo" className="h-8 w-auto object-contain" />
         <div>
           <h1 className="text-sm font-semibold tracking-wider text-glow leading-none">ORION</h1>
           <p className="text-[9px] text-muted-foreground tracking-[0.2em] uppercase mt-0.5">Space Connect</p>
@@ -76,9 +74,7 @@ function DesktopSidebar({ pathname }: { pathname: string }) {
     <aside className="hidden lg:flex w-64 shrink-0 border-r border-border bg-surface/40 backdrop-blur-xl flex-col z-30">
       <div className="p-6 border-b border-border">
         <div className="flex items-center gap-3">
-          <div className="relative h-10 w-10 rounded-xl bg-primary/15 flex items-center justify-center glow-primary">
-            <Satellite className="h-5 w-5 text-primary" />
-          </div>
+          <img src="/logo.png" alt="Orion Logo" className="h-10 w-auto object-contain" />
           <div>
             <h2 className="text-base font-semibold tracking-wider text-glow leading-tight">ORION</h2>
             <p className="text-[10px] text-muted-foreground tracking-[0.2em] uppercase">Space Connect</p>
