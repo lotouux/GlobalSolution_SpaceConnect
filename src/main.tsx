@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { routeTree } from './routeTree.gen'
 import './styles.css'
 
-// 1. Cria a instância do QueryClient
+// 1. Cria a instância global de Cache e Dados
 const queryClient = new QueryClient()
 
 // 2. Instancia o roteador passando o queryClient para o contexto
@@ -13,10 +13,19 @@ const router = createRouter({
   routeTree,
   context: {
     queryClient,
-  }
+  },
+  defaultPreload: 'intent',
+  defaultPreloadStaleTime: 0,
 })
 
-// 3. Renderiza a aplicação envolvendo com o Provider do QueryClient
+// 3. Regista o router no TypeScript para autocompletar as rotas no projeto inteiro
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router
+  }
+}
+
+// 4. Renderiza a aplicação
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)

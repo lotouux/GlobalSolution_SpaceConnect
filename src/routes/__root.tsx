@@ -1,3 +1,5 @@
+// É O ESQUELETO DO PROJETO, É O MOLDE QUE VAI SER USADO EM TODAS AS TELAS
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
 import { AppShell } from "../components/AppShell";

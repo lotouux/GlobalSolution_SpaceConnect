@@ -1,3 +1,5 @@
+// PÁGINA INICIAL DO PROJETO, ONDE O USUÁRIO VAI INTERAGIR COM O GLOBO E VER AS INFORMAÇÕES DOS SATÉLITES
+
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,7 +15,7 @@ export const Route = createFileRoute("/")({
 });
 
 // ============================================================================
-// 1. CAMADA DE LÓGICA E ESTADO (Custom Hook)
+// 1. CAMADA DE LÓGICA E ESTADO
 // ============================================================================
 
 function useConstellationSimulator() {
@@ -121,7 +123,7 @@ function MeshPage() {
         </div>
       </div>
 
-      {/* Botões de Ação (Com fuga responsiva) */}
+      {/* Botões de Ação*/}
       <div className={`absolute left-4 right-4 lg:left-8 lg:right-auto flex flex-col lg:flex-row gap-3 z-40 transition-all duration-500 ease-in-out ${
           selected ? "bottom-[80vh] lg:bottom-8" : "bottom-20 lg:bottom-8"
       }`}>
