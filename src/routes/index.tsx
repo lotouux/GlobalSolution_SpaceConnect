@@ -91,16 +91,14 @@ function MeshPage() {
     stormActive, triggerStorm, disableNode, stats 
   } = useConstellationSimulator();
 
-  // Ajuste de tipo com 'as const' para corrigir o erro do TypeScript
-  const springConfig = { type: "spring" as const, stiffness: 200, damping: 30 };
-
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-background">
-      {/* Camada 3D do Globo: Move-se para a direita quando selecionado */}
-      <motion.div 
-        animate={{ x: selected ? 210 : 0 }} 
-        transition={springConfig}
-        className="absolute inset-0 z-0 will-change-transform"
+    <div className="relative h-[calc(100dvh-4rem)] lg:h-screen w-full overflow-hidden bg-background grid-bg">
+      
+      {/* Camada 3D do Globo */}
+      <div 
+        className={`absolute inset-0 z-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${
+          selected ? "lg:translate-x-[210px]" : "translate-x-0"
+        }`}
       >
         <OrbitalGlobe
           nodes={nodes.map((n) => ({ ...n, failed: failedSet.has(n.id) }))}
@@ -108,7 +106,7 @@ function MeshPage() {
           onSelectNode={setSelected}
           selectedId={selected?.id}
         />
-      </motion.div>
+      </div>
 
       {/* Overlay Superior: Título e HUD */}
       <div className="absolute top-0 inset-x-0 p-4 lg:p-8 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 pointer-events-none z-10">
@@ -130,11 +128,11 @@ function MeshPage() {
         </div>
       </div>
 
-      {/* Botões de Ação */}
-      <motion.div 
-        animate={{ x: selected ? 400 : 0 }}
-        transition={springConfig}
-        className="absolute bottom-8 left-4 lg:left-8 flex flex-col lg:flex-row gap-3 z-20 will-change-transform"
+      {/* Botões de Ação Flutuantes (No mobile, desaparecem quando o painel está aberto) */}
+      <div 
+        className={`absolute bottom-6 left-4 right-4 lg:right-auto lg:bottom-8 lg:left-8 flex-col lg:flex-row gap-3 z-40 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${
+          selected ? "hidden lg:flex lg:translate-x-[400px]" : "flex translate-x-0"
+        }`}
       >
         <button
           onClick={triggerStorm}
@@ -152,7 +150,7 @@ function MeshPage() {
           <Cpu className="h-4 w-4" />
           Derrubar Nó Selecionado
         </button>
-      </motion.div>
+      </div>
 
       {/* Alerta Global de Tempestade */}
       <AnimatePresence>
@@ -176,12 +174,15 @@ function MeshPage() {
           <NodeDrawer
             node={{ ...selected, failed: failedSet.has(selected.id) }}
             onClose={() => setSelected(null)}
+            stormActive={stormActive}
+            triggerStorm={triggerStorm}
+            disableNode={disableNode}
           />
         )}
       </AnimatePresence>
 
       {/* Legenda Desktop */}
-      <div className="hidden lg:block absolute bottom-8 right-8 p-4 rounded-xl bg-surface/60 border border-border backdrop-blur-md space-y-2.5 shadow-xl">
+      <div className="hidden lg:block absolute bottom-8 right-8 p-4 rounded-xl bg-surface/60 border border-border backdrop-blur-md space-y-2.5 shadow-xl z-20">
         <div className="text-[9px] font-mono text-muted-foreground uppercase tracking-widest mb-1">Status da Malha</div>
         <LegendDot color="bg-primary shadow-[0_0_8px_rgba(16,185,129,0.5)]" label="Link óptico estável (FSOC)" />
         <LegendDot color="bg-destructive shadow-[0_0_8px_rgba(239,68,68,0.5)]" label="Falha de visada (DTN em uso)" />
@@ -223,7 +224,20 @@ function LegendDot({ color, label }: { color: string; label: string }) {
   );
 }
 
-function NodeDrawer({ node, onClose }: { node: SatNode; onClose: () => void }) {
+function NodeDrawer({ 
+  node, 
+  onClose,
+  stormActive,
+  triggerStorm,
+  disableNode
+}: { 
+  node: SatNode; 
+  onClose: () => void;
+  stormActive: boolean;
+  triggerStorm: () => void;
+  disableNode: () => void;
+}) {
+  // Simula pequenas flutuações na telemetria enquanto o painel está aberto
   const [liveWorkload, setLiveWorkload] = useState(node.workload);
   const [liveTemp, setLiveTemp] = useState(node.gpuTemp);
 
@@ -247,8 +261,11 @@ function NodeDrawer({ node, onClose }: { node: SatNode; onClose: () => void }) {
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: "-100%", opacity: 0 }}
       transition={{ type: "spring", damping: 30, stiffness: 250 }}
-      className="absolute top-0 left-0 h-full w-[420px] rounded-none bg-surface/95 backdrop-blur-2xl border-r border-border p-8 overflow-y-auto z-30 shadow-2xl scrollbar-hide"
+      className="absolute top-0 left-0 h-full w-full lg:w-[420px] rounded-none
+        bg-surface/95 backdrop-blur-2xl border-r border-border p-6 lg:p-8 overflow-y-auto z-30 shadow-2xl scrollbar-hide"
     >
+      <div className="lg:hidden h-1.5 w-12 rounded-full bg-border mx-auto mb-6" />
+
       <div className="flex items-start justify-between mb-8">
         <div>
           <div className="text-[10px] font-mono text-primary tracking-[0.3em] font-semibold mb-1">NÓ ORBITAL ATIVO</div>
@@ -312,6 +329,25 @@ function NodeDrawer({ node, onClose }: { node: SatNode; onClose: () => void }) {
           <div className="flex justify-between items-center border-b border-border/50 pb-2"><span>Correção de Erros</span><span className="text-foreground/90">0 SEU/24h</span></div>
           <div className="flex justify-between items-center pt-1"><span>Sistema Operativo</span><span className="text-foreground/90">RTEMS (Rust)</span></div>
         </div>
+      </div>
+
+      {/* Botões embutidos no painel (visíveis apenas no mobile) */}
+      <div className="mt-8 flex flex-col gap-3 lg:hidden pb-4">
+        <button
+          onClick={triggerStorm}
+          disabled={stormActive}
+          className="flex items-center justify-center gap-2.5 px-4 py-3 rounded-lg bg-destructive/15 border border-destructive/40 text-destructive text-xs font-medium hover:bg-destructive/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-md shadow-lg shadow-destructive/10"
+        >
+          <Waves className={`h-4 w-4 ${stormActive ? 'animate-pulse' : ''}`} />
+          {stormActive ? "Ionosfera Instável..." : "Simular Tempestade Solar"}
+        </button>
+        <button
+          onClick={disableNode}
+          className="flex items-center justify-center gap-2.5 px-4 py-3 rounded-lg bg-surface/80 border border-border text-xs font-medium text-foreground hover:bg-surface-elevated transition-all backdrop-blur-md shadow-lg"
+        >
+          <Cpu className="h-4 w-4" />
+          Derrubar Nó Selecionado
+        </button>
       </div>
     </motion.aside>
   );
