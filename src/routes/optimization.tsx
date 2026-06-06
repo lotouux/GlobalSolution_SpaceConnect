@@ -1,3 +1,5 @@
+// PÁGINA DE OTIMIZAÇÃO: CACHE SEMÂNTICO EM ÓRBITA
+
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -116,7 +118,7 @@ function OptimizationPage() {
   const { threshold, setThreshold, log, paused, setPaused, stats } = useSemanticCache();
 
   return (
-    <div className="h-[calc(100vh-4rem)] lg:h-screen overflow-y-auto bg-background pb-20 lg:pb-0">
+    <div className="h-[calc(100vh-4rem)] lg:h-screen overflow-y-auto bg-background pb-20 lg:pb-0 scrollbar-hide">
       <div className="max-w-7xl mx-auto p-4 lg:p-8">
         
         {/* Cabeçalho */}
@@ -292,7 +294,7 @@ function OptimizationPage() {
             <div className="col-span-1 text-right">Resultado</div>
           </div>
 
-          <div className="divide-y divide-border/50 max-h-[450px] overflow-y-auto custom-scrollbar">
+          <div className="divide-y divide-border/50 max-h-[450px] overflow-y-auto scrollbar-hide">
             <AnimatePresence initial={false}>
               {log.map((row) => (
                 <motion.div
