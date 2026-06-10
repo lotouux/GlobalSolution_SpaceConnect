@@ -79,14 +79,6 @@ Our system guarantees zero data loss and maximum bandwidth efficiency by combini
 
 ---
 
-## Next Steps
-- **Backend Integration:** Connect the React frontend to a real-time data streaming backend simulating the actual space nodes.
-- **Machine Learning Integration:** Implement a real local embedding model to generate actual cosine similarity metrics for the cache simulator.
-- **Advanced 3D Rendering:** Upgrade the 2D SVG/CSS orbital mesh representation to a fully interactive 3D WebGL/Three.js globe.
-- **Authentication & Roles:** Implement secure login for different clearance levels (e.g., Administrator, Climate Auditor, Defense Operator).
-
----
-
 ## Contributors
 This project is developed by FIAP students for the Global Solution:
 
