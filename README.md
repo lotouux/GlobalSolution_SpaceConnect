@@ -90,7 +90,7 @@ Our system guarantees zero data loss and maximum bandwidth efficiency by combini
 ## Contributors
 This project is developed by FIAP students for the Global Solution:
 
-[![Pedro](https://img.shields.io/badge/Leo-GitHub-000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pmiranda27)  
-[![Lucas](https://img.shields.io/badge/Leo-GitHub-000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lucas-silveira)  
+[![Pedro](https://img.shields.io/badge/Pedro-GitHub-000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pmiranda27)  
+[![Lucas](https://img.shields.io/badge/Lucas-GitHub-000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lucas-silveira)  
 [![Andy](https://img.shields.io/badge/Andy-GitHub-000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/saanmendes)  
 [![Bea](https://img.shields.io/badge/Bea-GitHub-000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lotouux)
