@@ -1,3 +1,4 @@
+
 # ORION – Orbital Network Orchestration & Edge AI
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -39,7 +40,7 @@ Our system guarantees zero data loss and maximum bandwidth efficiency by combini
 - **Energy-Aware Tracking:** Distinct indicators for nodes operating under direct sunlight versus those in orbital eclipse.
 - **Dynamic Stress Testing:** Includes a "Simulate Solar Storm" protocol to visually demonstrate network degradation and self-healing routing.
 <p align="center">
-  <img src="src/img/preview/mesh/orbital_mesh.png" alt="Orbital Mesh Digital Twin" width="700" />
+  <img width="2559" height="938" alt="Captura de tela 2026-06-11 095507" src="https://github.com/user-attachments/assets/969b74bf-9495-4ac8-ab21-022aaa285024" />
 </p>
 
 ---
@@ -50,7 +51,7 @@ Our system guarantees zero data loss and maximum bandwidth efficiency by combini
 - **Protocol Transparency:** Displays the active use of Bundle Protocol v7 (DTN) and 100 Gbps optical link capacities.
 
 <p align="center">
-  <img src="src/img/preview/telemetry/node_details.png" alt="Node Telemetry and AI Orchestration" width="700" />
+  <img width="2557" height="942" alt="Captura de tela 2026-06-11 100118" src="https://github.com/user-attachments/assets/f9a86f2c-a018-49ab-8298-1467df78ed35" />
 </p>
 
 ---
@@ -62,7 +63,8 @@ Our system guarantees zero data loss and maximum bandwidth efficiency by combini
 - **Customizable Thresholds:** Features a slider to adjust the aggressiveness of the Semantic Engine.
 
 <p align="center">
-  <img src="src/img/preview/cache/semantic_optimization.png" alt="Semantic Cache Dashboard" width="700" />
+  <img width="2557" height="944" alt="Captura de tela 2026-06-11 100253" src="https://github.com/user-attachments/assets/199bb199-fd8f-49b5-a024-ce5fad9df69d" />
+  <img width="2555" height="941" alt="Captura de tela 2026-06-11 100330" src="https://github.com/user-attachments/assets/4bdfeaba-89b3-4d40-a0f2-6dbe7e78d230" />
 </p>
 
 ---
@@ -74,7 +76,8 @@ Our system guarantees zero data loss and maximum bandwidth efficiency by combini
 - **Categorized Feed:** Real-time chronological feed of validated events.
 
 <p align="center">
-  <img src="src/img/preview/alerts/alerts_center.png" alt="Semantic Alerts Center" width="700" />
+  <img width="2537" height="938" alt="Captura de tela 2026-06-11 100448" src="https://github.com/user-attachments/assets/d69ab435-aefa-4135-8a40-78b206a38131" />
+  <img width="2541" height="938" alt="image" src="https://github.com/user-attachments/assets/4e35f9eb-bbc2-4658-9cc6-6b62cefe2b88" />
 </p>
 
 ---
